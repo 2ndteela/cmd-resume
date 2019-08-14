@@ -1,0 +1,45 @@
+#terminal-container {
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    max-width: 1024px;
+}
+
+#terminal-header {
+    width: 100%;
+    height: 36px;
+    background-color: green;
+    flex-direction: row;
+    justify-content: flex-start;
+    color: black;
+    padding-left: 8px;
+}
+
+#terminal-reactive-window {
+    height: 80%;
+    width: 100%;
+    border: 1px solid green;
+    border-top: none;
+    position: relative;
+}
+
+#terminal-window {
+    border: 1px solid green;
+    border-top: none;
+    height: 20%;
+    width: 100%;
+    align-items: flex-start;
+    padding: 8px;
+    overflow-y: scroll; 
+}
+
+.one-tab {
+    padding-left: 24px;
+}
+
+@media screen and (min-width: 1023px) {
+    #terminal-container {
+        padding: 16px 0;
+    }
+}

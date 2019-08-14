@@ -1,0 +1,16 @@
+.code-line-container {
+    flex-direction: row;
+    padding-top: 8px;
+    width: 100%;
+}
+
+.code-line-header {
+    padding-right: 4px;
+}
+
+.code-line-container input {
+    background-color: transparent;
+    border: none;
+    color: green;
+    width: 100%
+}
