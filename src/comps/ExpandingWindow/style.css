@@ -15,3 +15,24 @@
     height: 100%;
     padding: 8px;
 }
+
+.dialog-content *  {
+    width: 100%;
+    align-items: flex-start
+}
+
+.dialog-content h1 {
+    align-items: center;
+}
+
+.project-card {
+    padding-top: 16px;
+}
+
+.project-card div {
+    padding-bottom: 8px;
+}
+
+.project-card span {
+    color: white !important;
+}

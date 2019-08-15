@@ -25,9 +25,11 @@ class Terminal extends Component {
                 'experience',
                 'skills',
                 'hobbies',
-                'contact'
+                'contact',
+                'start'
             ],
-            lines: ['']
+            lines: [''],
+            selectedPage: 'start'
             
         }
         this.execute = this.execute.bind(this)
@@ -72,19 +74,19 @@ class Terminal extends Component {
                 if (idx === 2 ) {
 
                 }
+                else toPush = 'command "' + splitArr[0] + '" is not recognized'
             }
         }
         catch(err) {
-
+            toPush = 'Invalid input'
         }
 
         finally {
-            console.log(arr, toPush)
             arr.push(toPush)
             if(toPush !== '') arr.push('')
             this.setState({
                 lines: arr
-            }, () => console.log(this.state.lines))
+            })
         }
     }
 
@@ -95,7 +97,7 @@ class Terminal extends Component {
                     <span>application-terminal.exe</span>
                 </div>
                 <div id="terminal-reactive-window">
-                    <ExpandingWindow expanded={true}>test</ExpandingWindow>
+                    <ExpandingWindow page={this.state.selectedPage}>test</ExpandingWindow>
                 </div>
                 <div id="terminal-window">
                     {
