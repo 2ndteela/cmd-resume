@@ -25,20 +25,67 @@ class Terminal extends Component {
                 'experience',
                 'skills',
                 'hobbies',
-
+                'contact'
             ],
-            lines: [true]
+            lines: ['']
             
         }
         this.execute = this.execute.bind(this)
     }
 
-    execute() {
-        const arr = [...this.state.lines]
-        arr.push(true)
-        this.setState({
-            lines: arr
-        })
+    execute(cmd) {
+        let arr = [...this.state.lines]
+
+        console.log(cmd)
+        let toPush =''
+        try {
+            const splitArr = cmd.split(' ')
+            const idx = this.state.commands.indexOf( splitArr[0]) 
+
+            if(splitArr.length < 2) {
+                if(idx === -1) {
+                    toPush = 'command "' + splitArr[0] + '" is not recognized'
+                }
+
+                else if(idx === 1) {
+                    arr.push('Available pages are:')
+                    this.state.pages.forEach((pg, itr) => {
+                        const temp = <div style={{paddingLeft: '16px'}} > {pg} </div>
+                        arr.push(temp)
+                    })
+                }
+
+                else if(idx === 3) {
+                    arr = ['']
+                    toPush = ''
+                }
+                else if(idx === 0) {
+                    this.state.instructions.forEach((inst, i ) => {
+                        arr.push(inst)
+                    })
+                }
+            }
+
+            else if (splitArr.length > 2) toPush = 'Too many arguments in input'
+
+            else {
+                if (idx === 2 ) {
+
+                }
+            }
+        }
+        catch(err) {
+
+        }
+
+        finally {
+            console.log(arr, toPush)
+            arr.push(toPush)
+            if(toPush !== '') arr.push('')
+            this.setState({
+                lines: arr
+            }, () => console.log(this.state.lines))
+        }
     }
 
     render() { 
@@ -48,18 +95,14 @@ class Terminal extends Component {
                     <span>application-terminal.exe</span>
                 </div>
                 <div id="terminal-reactive-window">
-                    <ExpandingWindow title='Resume'></ExpandingWindow>
+                    <ExpandingWindow expanded={true}>test</ExpandingWindow>
                 </div>
                 <div id="terminal-window">
-                    {this.state.instructions.map((instruction, itr) => {
-                        return <div key={itr + '-inst'} className="window-instruction">{instruction}</div>
-                    })}
                     {
                         this.state.lines.map((line, i) => {
-                            return <CodeLine key={i + '-line'}  callback={this.execute} ></CodeLine>
+                            return <CodeLine key={i + '-line'} line={line}  callback={this.execute} ></CodeLine>
                         })
                     }
-                    
                 </div>
             </div>
          );

@@ -8,9 +8,8 @@ class ExpandingWindow extends Component {
     }
     render() { 
         return ( 
-            <div className="dialog-conatiner">
+            <div className={this.props.expanded ? 'dialog-container expanded-window' : 'dialog-container'}>
                 <div className="dialog-content">
-                    <div className="dialog-tag">{this.props.title}</div>
                     {this.props.children}
                 </div>
             </div>

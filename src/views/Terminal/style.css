@@ -19,14 +19,13 @@
 #terminal-reactive-window {
     height: 80%;
     width: 100%;
-    border: 1px solid green;
     border-top: none;
     position: relative;
+    justify-content: flex-end;
 }
 
 #terminal-window {
-    border: 1px solid green;
-    border-top: none;
+    border-top: 1px solid green;
     height: 20%;
     width: 100%;
     align-items: flex-start;
@@ -38,8 +37,30 @@
     padding-left: 24px;
 }
 
+#terminal-dialogs {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#terminal-dialogs div {
+    color: black;
+    background-color: green;
+    padding: 8px 8px;
+    flex: 1;
+
+}
+
 @media screen and (min-width: 1023px) {
     #terminal-container {
         padding: 16px 0;
+    }
+    #terminal-window {
+        border: 1px solid green;
+    }
+    #terminal-reactive-window {
+        border: 1px solid green;
+        border-bottom: none;
+        border-top: none;
     }
 }

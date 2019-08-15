@@ -12,36 +12,40 @@ class CodeLine extends Component {
 
     execute() {
         this.setState({ locked: true})
-        this.props.callback()
+        this.props.callback(this.state.command)
     }
 
-    checkKey(val) {
-        if(val.key === 'Enter') this.execute()
-        else if(val.key === 'Backspace') 
-            this.setState({
-                command: this.state.command.substr(0, this.state.command.length - 1)
-            })
+    checkValue(e) {
+        if(e.key === 'Enter') this.execute()
+    }
 
-        else if (val.key === 'Control' || val.key === 'Shift' || val.key === 'Tab' || val.key === 'Alt' || val.key === 'CapsLock') {}
-
-        else
+    updateValue(val) {
         this.setState({
-            command: this.state.command + val.key
+            command: val.target.value
         })
     }
 
     showInput() {
         if(this.state.locked) return <div>{this.state.command}</div>
-        else return <input autoCapitalize={'none'} value={this.state.command} autoFocus onKeyDown={(e) => this.checkKey(e)} ></input>
+        else return <input autoCapitalize={'none'} value={this.state.command} autoFocus onChange={(e) => this.updateValue(e)} onKeyDown={(e) => this.checkValue(e)} ></input>
     }
 
     render() { 
-        return ( 
-            <div className="code-line-container">
-                <span className="code-line-header" >user@job:~$</span>
-                {this.showInput()}
-            </div>
-         );
+
+        if(this.props.line === '')
+            return ( 
+                <div className="code-line-container">
+                    <span className="code-line-header" >user@job:~$</span>
+                    {this.showInput()}
+                </div>
+            );
+        
+        else
+            return (
+                <div className="code-line-container">
+                    <span>{this.props.line}</span>
+                </div>
+            )
     }
 }
  
