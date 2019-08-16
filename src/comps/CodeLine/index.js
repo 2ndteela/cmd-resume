@@ -39,7 +39,6 @@ class CodeLine extends Component {
                     {this.showInput()}
                 </div>
             );
-        
         else
             return (
                 <div className="code-line-container">

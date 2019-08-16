@@ -6,6 +6,8 @@
 .dialog-container {
     position: absolute;
     align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .expanded-window {

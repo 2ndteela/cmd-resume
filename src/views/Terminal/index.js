@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './style.css'
 import CodeLine from '../../comps/CodeLine';
-import ExpandingWindow from '../../comps/ExpandingWindow';
+import Typist from 'react-typist'
+import '../../../node_modules/react-typist/dist/Typist.css'
 
 class Terminal extends Component {
     constructor(props) {
@@ -11,13 +12,13 @@ class Terminal extends Component {
                 <div>commands</div>,
                 <div className="align-start">help - lists out all commands</div>,
                 <div className="align-start">pages - lists out all pages</div>,
-                <div><span>goto - navigate to a page</span> <span className="one-tab">usage: goto [pageName]</span> </div>,
+                <div><span>print - print a page</span> <span className="one-tab">usage: goto [pageName]</span> </div>,
                 <div>contact - display contact information</div>
             ],
             commands: [
                 'help',
                 'pages',
-                'goto',
+                'print',
                 'clear'
             ],
             pages: [
@@ -37,9 +38,8 @@ class Terminal extends Component {
 
     execute(cmd) {
         let arr = [...this.state.lines]
-
-        console.log(cmd)
         let toPush =''
+
         try {
             const splitArr = cmd.split(' ')
             const idx = this.state.commands.indexOf( splitArr[0]) 
@@ -72,7 +72,7 @@ class Terminal extends Component {
 
             else {
                 if (idx === 2 ) {
-
+                    toPush = <h3>This is a print command that i have to try out doing a long thing</h3>
                 }
                 else toPush = 'command "' + splitArr[0] + '" is not recognized'
             }
@@ -96,13 +96,17 @@ class Terminal extends Component {
                 <div id="terminal-header"> 
                     <span>application-terminal.exe</span>
                 </div>
-                <div id="terminal-reactive-window">
-                    <ExpandingWindow page={this.state.selectedPage}>test</ExpandingWindow>
-                </div>
                 <div id="terminal-window">
                     {
                         this.state.lines.map((line, i) => {
-                            return <CodeLine key={i + '-line'} line={line}  callback={this.execute} ></CodeLine>
+                            if(line !== 'typist') return <CodeLine key={i + '-line'} line={line}  callback={this.execute} ></CodeLine>
+                            else
+                                return(
+                                    <Typist avgTypingDelay={30} cursor={{hideWhenDone: true, hideWhenDoneDelay: 0 }} >
+                                        <Typist.Delay ms={500} />
+                                        {this.props.children}
+                                    </Typist>
+                                )
                         })
                     }
                 </div>
