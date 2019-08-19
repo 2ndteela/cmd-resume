@@ -6,7 +6,8 @@ class CodeLine extends Component {
         super(props);
         this.state = { 
             command: '',
-            locked: false
+            locked: false,
+            dir: ''
         }
     }
 
@@ -30,12 +31,18 @@ class CodeLine extends Component {
         else return <input autoCapitalize={'none'} value={this.state.command} autoFocus onChange={(e) => this.updateValue(e)} onKeyDown={(e) => this.checkValue(e)} ></input>
     }
 
+    componentDidMount() {
+        this.setState({
+            dir: this.props.dir + ''
+        })
+    }
+
     render() { 
 
         if(this.props.line === '')
             return ( 
                 <div className="code-line-container">
-                    <span className="code-line-header" >user@job:~$</span>
+                    <span className="code-line-header" >user@job{this.state.dir}:~$</span>
                     {this.showInput()}
                 </div>
             );

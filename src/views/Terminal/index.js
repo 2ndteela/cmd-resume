@@ -3,22 +3,23 @@ import './style.css'
 import CodeLine from '../../comps/CodeLine';
 import Typist from 'react-typist'
 import '../../../node_modules/react-typist/dist/Typist.css'
+import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir} from '../../services'
 
 class Terminal extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             instructions: [
-                <div>commands</div>,
-                <div className="align-start">help - lists out all commands</div>,
-                <div className="align-start">pages - lists out all pages</div>,
-                <div><span>print - print a page</span> <span className="one-tab">usage: goto [pageName]</span> </div>,
-                <div>contact - display contact information</div>
+                <div className="align-start one-tab white-color">ls - lists out directory</div>,
+                <div className="white-color one-tab"><div className="align-start">cd - change directory</div> <span className="two-tab">usage: cd [folderName]</span></div>,
+                <div className="one-tab white-color"><div>cat - prints out the contents of a file</div> <span className="two-tab">usage: cat [fileName]</span></div>,
+                <div className="one-tab white-color">help - print out this menu</div>
             ],
             commands: [
                 'help',
-                'pages',
-                'print',
+                'ls',
+                'cd',
+                'cat',
                 'clear'
             ],
             pages: [
@@ -27,67 +28,134 @@ class Terminal extends Component {
                 'skills',
                 'hobbies',
                 'contact',
-                'start'
             ],
-            lines: [''],
-            selectedPage: 'start'
+            lines: [],
+            selectedPage: 'start',
+            currentDirectory: '/',
+            availableDirectories: ['projects', 'experience', 'skills', 'hobbies', 'contact'],
             
         }
         this.execute = this.execute.bind(this)
     }
 
     execute(cmd) {
-        let arr = [...this.state.lines]
-        let toPush =''
-
         try {
             const splitArr = cmd.split(' ')
-            const idx = this.state.commands.indexOf( splitArr[0]) 
+            const idx = this.state.commands.indexOf(splitArr[0]) 
 
-            if(splitArr.length < 2) {
-                if(idx === -1) {
-                    toPush = 'command "' + splitArr[0] + '" is not recognized'
-                }
+            switch(idx) {
+                case 0: 
+                    this.help()
+                    break
 
-                else if(idx === 1) {
-                    arr.push('Available pages are:')
-                    this.state.pages.forEach((pg, itr) => {
-                        const temp = <div style={{paddingLeft: '16px'}} > {pg} </div>
-                        arr.push(temp)
-                    })
-                }
+                case 1: 
+                    this.ls()
+                    break
+                
+                case 2: 
+                    this.cd(splitArr[1])
+                    break
+                
+                case 3:
+                    this.cat()
+                    break
+                
+                case 4: 
+                    this.clear()
+                    break
 
-                else if(idx === 3) {
-                    arr = ['']
-                    toPush = ''
-                }
-                else if(idx === 0) {
-                    this.state.instructions.forEach((inst, i ) => {
-                        arr.push(inst)
-                    })
-                }
+                default:
+                    throw new Error('command "' + splitArr[0] + '" not recognized')
             }
 
-            else if (splitArr.length > 2) toPush = 'Too many arguments in input'
-
-            else {
-                if (idx === 2 ) {
-                    toPush = <h3>This is a print command that i have to try out doing a long thing</h3>
-                }
-                else toPush = 'command "' + splitArr[0] + '" is not recognized'
-            }
         }
-        catch(err) {
-            toPush = 'Invalid input'
-        }
+        catch (err) {
+            const temp = [...this.state.lines]
+            temp.push(err.message)
+            temp.push('')
 
-        finally {
-            arr.push(toPush)
-            if(toPush !== '') arr.push('')
             this.setState({
-                lines: arr
+                lines: temp
             })
         }
+
+    }
+
+    ls() {
+        let temp = [...this.state.lines]
+        let arr
+
+        if(this.state.currentDirectory === '/') {
+            this.state.pages.forEach( page => {
+                const toAdd =  <div className="one-tab">{page}/</div>
+                temp.push(toAdd)
+            })
+        }
+        else { 
+
+            if(this.state.currentDirectory === '/projects/') arr = projectsDir()
+            else if (this.state.currentDirectory === '/experience/') arr = expDir()
+            else if (this.state.currentDirectory === '/skills/') arr = skillsDir()
+            else if (this.state.currentDirectory === '/hobbies/') arr = hobbiesDir()
+            else if (this.state.currentDirectory === '/contact/') arr = contactDir()
+
+            arr.unshift('../')
+            arr.forEach(item => temp.push(<div className="one-tab" >{item}</div>))
+        }
+        temp.push('')
+        this.setState({
+            lines: temp
+        })
+    }
+
+    help() {
+        let temp = [...this.state.lines]
+        this.state.instructions.forEach(i => {
+            temp.push(i)
+        })
+        temp.push('')
+        this.setState({
+            lines: temp
+        })
+    }
+
+    cd(cmd) {
+        if(this.state.availableDirectories.indexOf(cmd) === -1) throw new Error('directory "' + cmd + '" does not exist')
+        else {
+            if(cmd === '../') {
+                const arr =  [...this.state.lines]
+                arr.push('')
+                this.setState({
+                    currentDirectory: '/',
+                    availableDirectories: [...this.state.pages],
+                    lines: arr
+                })
+            }
+            else {
+                const temp = this.state.currentDirectory + cmd + '/'
+                const arr = [...this.state.lines]
+                arr.push('')
+                this.setState({ 
+                    currentDirectory: temp,
+                    lines: arr
+                })
+
+                if(this.state.pages.indexOf(cmd) !== -1) this.setState({ availableDirectories: ['../']})
+            }
+        }
+    }
+
+    cat() {
+
+    }
+
+    clear() {
+        this.setState({ lines: ['']})
+    }
+
+    componentDidMount() {
+        this.help()
+
     }
 
     render() { 
@@ -99,14 +167,7 @@ class Terminal extends Component {
                 <div id="terminal-window">
                     {
                         this.state.lines.map((line, i) => {
-                            if(line !== 'typist') return <CodeLine key={i + '-line'} line={line}  callback={this.execute} ></CodeLine>
-                            else
-                                return(
-                                    <Typist avgTypingDelay={30} cursor={{hideWhenDone: true, hideWhenDoneDelay: 0 }} >
-                                        <Typist.Delay ms={500} />
-                                        {this.props.children}
-                                    </Typist>
-                                )
+                            return <CodeLine key={i + '-line'} line={line} dir={this.state.currentDirectory}  callback={this.execute} ></CodeLine>
                         })
                     }
                 </div>

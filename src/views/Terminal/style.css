@@ -38,6 +38,18 @@
     padding-left: 24px;
 }
 
+.two-tab {
+    padding-left: 48px;
+}
+
+.white-color {
+    color: white !important;
+}
+
+.white-color * {
+    color:  white !important;
+}
+
 #terminal-dialogs {
     width: 100%;
     flex-direction: row;
