@@ -3,7 +3,7 @@ import './style.css'
 import CodeLine from '../../comps/CodeLine';
 import Typist from 'react-typist'
 import '../../../node_modules/react-typist/dist/Typist.css'
-import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir} from '../../services'
+import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir, facultyCards} from '../../services'
 
 class Terminal extends Component {
     constructor(props) {
@@ -42,6 +42,7 @@ class Terminal extends Component {
         try {
             const splitArr = cmd.split(' ')
             const idx = this.state.commands.indexOf(splitArr[0]) 
+            if(splitArr.length > 2) throw new Error('Too many parameters for command "' + splitArr[0] + '"')
 
             switch(idx) {
                 case 0: 
@@ -57,7 +58,7 @@ class Terminal extends Component {
                     break
                 
                 case 3:
-                    this.cat()
+                    this.cat(splitArr[1])
                     break
                 
                 case 4: 

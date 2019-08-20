@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const projectsDir = () => {
     return [
         'byuls-faculty-cards.txt',
@@ -16,13 +18,15 @@ export const skillsDir = () => {
         'vue.txt',
         'node.txt',
         'entity-framework-core.txt',
+        'all.txt'
     ]
 }
 
 export const expDir = () => {
     return [
         'N26.txt',
-        'byu-lsit.txt'
+        'byu-lsit.txt',
+        'all.txt'
     ]
 }
 
@@ -31,6 +35,7 @@ export const hobbiesDir = () => {
         'frisbee.txt',
         'martial-arts.txt',
         'baking.txt',
+        'all.txt'
     ]
 }
 
@@ -38,4 +43,12 @@ export const contactDir = () => {
     return [
         'email.txt'
     ]
+}
+
+export const facultyCards = () => {
+    return <div className="print-out">
+        <h1>BYU Faculty Scheduler</h1>
+        <div>This was an app to help scheduling meetings and generate a card for the staff to print and display outside their offices</div>
+        <div>Technologies used: Vue, Entity Framework Core, MySql</div>
+    </div>
 }
