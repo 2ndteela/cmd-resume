@@ -98,3 +98,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   align-items: center;
   text-align: center;
 }
+
+script {
+  display: none !important;
+}
