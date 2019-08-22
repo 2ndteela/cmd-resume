@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './style.css'
 import CodeLine from '../../comps/CodeLine';
-import Typist from 'react-typist'
+// import Typist from 'react-typist'
 import '../../../node_modules/react-typist/dist/Typist.css'
-import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir, facultyCards} from '../../services'
+import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir, facultyCards, allProjects, lsInterns, dndCompanion, familyMap, reactSkill, reactNativeSkill, vueSkill, nodeSkill, efcoreSkill, allSkills, n26Exp, lsitExp, allExp} from '../../services'
 
 class Terminal extends Component {
     constructor(props) {
@@ -11,8 +11,8 @@ class Terminal extends Component {
         this.state = { 
             instructions: [
                 <div className="align-start one-tab white-color">ls - lists out directory</div>,
-                <div className="white-color one-tab"><div className="align-start">cd - change directory</div> <span className="two-tab">usage: cd [folderName]</span></div>,
-                <div className="one-tab white-color"><div>cat - prints out the contents of a file</div> <span className="two-tab">usage: cat [fileName]</span></div>,
+                <div className="white-color one-tab align-start"><div>cd - change directory</div> <span className="two-tab">usage: cd [folderName]</span></div>,
+                <div className="one-tab white-color align-start"><div>cat - prints out the contents of a file</div> <span className="two-tab">usage: cat [fileName]</span></div>,
                 <div className="one-tab white-color">help - print out this menu</div>
             ],
             commands: [
@@ -146,8 +146,36 @@ class Terminal extends Component {
         }
     }
 
-    cat() {
+    cat(cmd) {
+        const temp = [...this.state.lines]
+        if(this.state.currentDirectory === '/projects/') {
+            if(cmd === 'byuls-faculty-cards.txt') temp.push(facultyCards())
+            else if(cmd === 'byuls-internships.txt') temp.push(lsInterns())
+            else if (cmd === 'dnd-companion.txt') temp.push(dndCompanion())
+            else if (cmd === 'family-map-app.txt') temp.push(familyMap())
+            else if (cmd === 'all.txt') temp.push(allProjects())
+            else temp.push('The directory "' + cmd + '" does not exsist')
+        }
 
+        else if (this.state.currentDirectory === '/skills/') {
+            if(cmd === 'react.txt') temp.push(reactSkill())
+            else if(cmd === 'react-native.txt' ) temp.push(reactNativeSkill())
+            else if(cmd === 'vue.txt') temp.push(vueSkill())
+            else if(cmd === 'node.txt') temp.push(nodeSkill())
+            else if(cmd === 'entity-framework-core.txt') temp.push(efcoreSkill())
+            else if(cmd === 'all.txt') temp.push(allSkills())
+            else temp.push('The directory "' + cmd + '" does not exsist') 
+        }
+
+        else if (this.state.currentDirectory === '/experience/') {
+            if(cmd === 'N26.txt') temp.push(n26Exp())
+            else if (cmd === 'byu-lsit.txt') temp.push(lsitExp())
+            else if (cmd === 'all.txt') temp.push(allExp())
+            else temp.push('The directory "' + cmd + '" does not exsist')
+        }
+
+        temp.push('')
+        this.setState({ lines: temp })
     }
 
     clear() {
@@ -168,7 +196,7 @@ class Terminal extends Component {
                 <div id="terminal-window">
                     {
                         this.state.lines.map((line, i) => {
-                            return <CodeLine key={i + '-line'} line={line} dir={this.state.currentDirectory}  callback={this.execute} ></CodeLine>
+                            return <CodeLine key={i + '-line'} line={line} dir={this.state.currentDirectory} list={this.state.availableDirectories} callback={this.execute} ></CodeLine>
                         })
                     }
                 </div>

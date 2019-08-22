@@ -64,6 +64,21 @@
 
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: green; 
+    border-radius: 8px;
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: black; 
+    width: 10px;
+  }
+
 @media screen and (min-width: 1023px) {
     #terminal-container {
         padding: 16px 0;

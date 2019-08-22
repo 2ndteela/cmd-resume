@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './style.css'
+import {projectsDir, skillsDir, expDir} from '../../services'
 
 class CodeLine extends Component {
     constructor(props) {
@@ -18,6 +19,29 @@ class CodeLine extends Component {
 
     checkValue(e) {
         if(e.key === 'Enter') this.execute()
+        else if (e.key === 'Tab') {
+            e.preventDefault()
+
+            let arr
+            if(this.state.dir === '/') arr = [...this.props.list]
+            else if(this.state.dir ==='/projects/') arr = projectsDir()
+            else if(this.state.dir === '/skills/') arr = skillsDir()
+            else if(this.state.dir ==='/experience/') arr = expDir()
+            
+            const split = this.state.command.split(' ')
+            if(split.length === 2) {
+                for(let i = 0; i < arr.length; i++) {
+                    if(arr[i].includes(split[1])) {
+
+                        this.setState({
+                            command: split[0] + ' ' + arr[i]
+                        })
+
+                        i = arr.length
+                    }
+                }
+            } 
+        }
     }
 
     updateValue(val) {

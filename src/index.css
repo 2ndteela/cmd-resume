@@ -29,6 +29,7 @@ body * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  display: flex;
 }
 
 .Typist {
@@ -67,10 +68,33 @@ h1, h2, h3 {
   align-items: center !important;
 }
 
-.justify-content {
+.justify-center {
   justify-content: center !important;
 }
 
 input:focus, select:focus, textarea:focus, button:focus {
   outline: none;
+}
+
+.print-out {
+  align-items: flex-start;
+}
+
+.print-out h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.pad-bottom {
+  padding-bottom: 8px;
+}
+
+.skill-div {
+  align-items: flex-start;
+}
+
+.skill-div h2 {
+  width: 100%;
+  align-items: center;
+  text-align: center;
 }
