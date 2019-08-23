@@ -287,15 +287,44 @@ export const allExp = () => {
 }
 
 export const frisbeeHobby = () => {
-
+    return <div className="print-out">
+        {fillSymbol('*')}
+        <h2>CHI Ultimate</h2>
+        {fillSymbol('*')}
+        <br></br>
+        <div>
+            I've been playing collegiate Ultimate frisbee with BYU the past 2 years and have loved it. The game isn't too big right now, even though almost every
+            university has a team. It's a semi-competitive way for me to make good friends, travel and stay fit. To stay in shape for Utlimate we have a daily training
+            regiment that includes practices, lifting and running which has helped me build discipline and drive, as well as physical strength.
+        </div>
+    </div>
 }
 
 export const martialArtHobby = () => {
-
+    return <div className="print-out">
+        {fillSymbol('*')}
+        <h2>Martial Arts</h2>
+        {fillSymbol('*')}
+        <br></br>
+        <div>
+            I've been training in various martial arts for the past 6 years. I've studied traditional Budoshin Jiu Jitsu, Brazilian Jiu Jitsu, Krav Maga and 
+            a little bit of kick boxing and Shotokan Karate. This has not only helped me learn to defend myself, but also a sense of control and clam in stressful
+            situations.
+        </div>
+    </div>
 }
 
 export const bakingHobby = () => {
-
+    return <div className="print-out">
+        {fillSymbol('*')}
+        <h2>Baking and Cooking</h2>
+        {fillSymbol('*')}
+        <br></br>
+        <div>
+            Baking and cooking really havsn't provided me any hard skills, but I've always thought that if eating is going to be essential to my life, might as well
+            make food worth eating and sharing.
+        </div>
+    </div>
 }
 
 export const allHobbies = () => {

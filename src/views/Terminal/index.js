@@ -3,7 +3,7 @@ import './style.css'
 import CodeLine from '../../comps/CodeLine';
 // import Typist from 'react-typist'
 import '../../../node_modules/react-typist/dist/Typist.css'
-import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir, facultyCards, allProjects, lsInterns, dndCompanion, familyMap, reactSkill, reactNativeSkill, vueSkill, nodeSkill, efcoreSkill, allSkills, n26Exp, lsitExp, allExp} from '../../services'
+import {projectsDir, expDir, skillsDir, hobbiesDir, contactDir, facultyCards, allProjects, lsInterns, dndCompanion, familyMap, reactSkill, reactNativeSkill, vueSkill, nodeSkill, efcoreSkill, allSkills, n26Exp, lsitExp, allExp, frisbeeHobby, martialArtHobby, bakingHobby, allHobbies} from '../../services'
 
 class Terminal extends Component {
     constructor(props) {
@@ -13,7 +13,8 @@ class Terminal extends Component {
                 <div className="align-start one-tab white-color">ls - lists out directory</div>,
                 <div className="white-color one-tab align-start"><div>cd - change directory</div> <span className="two-tab">usage: cd [folderName]</span></div>,
                 <div className="one-tab white-color align-start"><div>cat - prints out the contents of a file</div> <span className="two-tab">usage: cat [fileName]</span></div>,
-                <div className="one-tab white-color">help - print out this menu</div>
+                <div className="one-tab white-color">help - print out this menu</div>,
+                <div className="one-tab white-color">tab key - autocomplete</div>
             ],
             commands: [
                 'help',
@@ -121,9 +122,9 @@ class Terminal extends Component {
     }
 
     cd(cmd) {
-        if(this.state.availableDirectories.indexOf(cmd) === -1) throw new Error('directory "' + cmd + '" does not exist')
+        if(this.state.availableDirectories.indexOf(cmd) === -1 && cmd !== '..') throw new Error('directory "' + cmd + '" does not exist')
         else {
-            if(cmd === '../') {
+            if(cmd === '../' || cmd === '..') {
                 const arr =  [...this.state.lines]
                 arr.push('')
                 this.setState({
@@ -171,6 +172,14 @@ class Terminal extends Component {
             if(cmd === 'N26.txt') temp.push(n26Exp())
             else if (cmd === 'byu-lsit.txt') temp.push(lsitExp())
             else if (cmd === 'all.txt') temp.push(allExp())
+            else temp.push('The directory "' + cmd + '" does not exsist')
+        }
+
+        else if (this.state.currentDirectory === '/hobbies/') {
+            if(cmd === 'frisbee.txt') temp.push(frisbeeHobby())
+            else if (cmd === 'martial-arts.txt') temp.push(martialArtHobby())
+            else if (cmd === 'baking.txt') temp.push(bakingHobby())
+            else if (cmd === 'all.txt') temp.push(allHobbies())
             else temp.push('The directory "' + cmd + '" does not exsist')
         }
 

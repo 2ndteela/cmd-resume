@@ -7,13 +7,9 @@ body {
   color: green;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 body {
   display: flex;
+  display: -webkit-flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -30,10 +26,10 @@ body * {
   margin: 0;
   box-sizing: border-box;
   display: flex;
-}
-
-.Typist {
-  display: initial;
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  -webkit-justify-content: flex-start;
+  -webkit-align-items: center;
 }
 
 a { 
@@ -46,30 +42,37 @@ h1, h2, h3 {
 
 .row-flex {
   flex-direction: row !important;
+  -webkit-flex-direction: row !important;
 }
 
 .align-end {
   align-items: flex-end !important;
+  -webkit-align-items: flex-end !important;
 }
 
 .justify-end {
   justify-content: flex-end !important;
+  -webkit-justify-content: flex-end !important;
 }
 
 .align-start {
   align-items: flex-start !important;
+  -webkit-align-items: flex-start !important;
 }
 
 .justify-start {
   justify-content: flex-start !important;
+  -webkit-justify-content: flex-start !important;
 }
 
 .align-center {
   align-items: center !important;
+  -webkit-align-items: center !important;
 }
 
 .justify-center {
   justify-content: center !important;
+  -webkit-justify-content: center !important;  
 }
 
 input:focus, select:focus, textarea:focus, button:focus {

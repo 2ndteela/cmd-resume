@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './style.css'
-import {projectsDir, skillsDir, expDir} from '../../services'
+import {projectsDir, skillsDir, expDir, hobbiesDir} from '../../services'
 
 class CodeLine extends Component {
     constructor(props) {
@@ -27,6 +27,8 @@ class CodeLine extends Component {
             else if(this.state.dir ==='/projects/') arr = projectsDir()
             else if(this.state.dir === '/skills/') arr = skillsDir()
             else if(this.state.dir ==='/experience/') arr = expDir()
+            else if (this.state.dir === '/hobbies/') arr = hobbiesDir()
+            else arr = []
             
             const split = this.state.command.split(' ')
             if(split.length === 2) {
